@@ -13,39 +13,68 @@
 
 using namespace std;
 
-void Del(int* array, int size) {
-	int counter = 0;
+void Funcition(int* array, int size) {
+	int positive = 0, negative = 0, zeros = 0;
 	for (int i = 0; i < size; i++) {
-		if (*(array + i) >= 0) {
-			counter++;
+		if (*(array + i) > 0) {
+			positive++;
+		}
+		else if (*(array + i) < 0) {
+			negative++;
+		}
+		else if (*(array + i) == 0) {
+			zeros++;
 		}
 	}
-	int* array2 = new int[counter];
-	int index = 0;
+	int* pos_array = new int[positive];
+	int* neg_array = new int[negative];
+	int* zero_array = new int[zeros];
+	int index_p = 0;
+	int index_n = 0;
+	int index_z = 0;
+
 	for (int i = 0; i < size; i++) {
-		if (*(array + i) >= 0) {
-			*(array2 + index) = *(array + i);
-			index++;
+		if (*(array + i) > 0) {
+			*(pos_array + index_p) = *(array + i);
+			index_p++;
+		}
+		else if (*(array + i) < 0) {
+			*(neg_array + index_n) = *(array + i);
+			index_n++;
+
+		}
+		else if (*(array + i) == 0) {
+			*(zero_array + index_z) = *(array + i);
+			index_z++;
 		}
 	}
 	cout << endl;
-	for (int i = 0; i < counter; i++) {
-		cout << *(array2 + i) << ' ';
+	for (int i = 0; i < positive; i++) {
+		cout << *(pos_array + i) << ' ';
 	}
-	delete[] array2;
+	cout << endl;
+	for (int i = 0; i < negative; i++) {
+		cout << *(neg_array + i) << ' ';
+	}
+	cout << endl;
+	for (int i = 0; i < zeros; i++) {
+		cout << *(zero_array + i) << ' ';
+	}
+	delete[]pos_array;
+	delete[]neg_array;
+	delete[]zero_array;
 }
 int main(){
 	srand(time(nullptr));
-	int size;
-	cout << "Write size: ";
-	cin >> size;
-	int* array = new int[size];
+	int const size = 20;
+	int array[size];
 	for (int i = 0; i < size; i++) {
-		*(array + i) = -15 + rand() % (15 + 15 + 1);
-		cout << *(array + i) << ' ';
+		array[i] = -15 + rand() % (21); 
+		cout << array[i]<<' ';
 	}
-	Del(array, size);
-	delete[] array;
+	cout << endl;
+	Funcition(array, size);
+
 
 	return 0;
 }
