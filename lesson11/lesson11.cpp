@@ -13,32 +13,39 @@
 
 using namespace std;
 
-void Math_Op(vector <int> &array,int size, int *suma, int *product_of_digits) {
-	*suma = 0;
-	*product_of_digits = 1;
+void Del(int* array, int size) {
+	int counter = 0;
 	for (int i = 0; i < size; i++) {
-		*suma += array[i];
-		*product_of_digits *= array[i];
+		if (*(array + i) >= 0) {
+			counter++;
+		}
 	}
-	cout << *suma << ' ' << *product_of_digits;
-}
-
-int main() {
-	vector <int> array;
-	short size = 7;
-	int suma, product_of_digits;
-	for (short i = 0; i < size; i++) {
-		short digit = 1 + rand() % (20 - 1 + 1);
-		array.push_back(digit);
-	}
-	for (auto i : array) {
-		cout << ' ' << i;
+	int* array2 = new int[counter];
+	int index = 0;
+	for (int i = 0; i < size; i++) {
+		if (*(array + i) >= 0) {
+			*(array2 + index) = *(array + i);
+			index++;
+		}
 	}
 	cout << endl;
-	suma = 0;
-	product_of_digits = 1;
-	Math_Op(array, size, &suma, &product_of_digits);
-
+	for (int i = 0; i < counter; i++) {
+		cout << *(array2 + i) << ' ';
+	}
+	delete[] array2;
+}
+int main(){
+	srand(time(nullptr));
+	int size;
+	cout << "Write size: ";
+	cin >> size;
+	int* array = new int[size];
+	for (int i = 0; i < size; i++) {
+		*(array + i) = -15 + rand() % (15 + 15 + 1);
+		cout << *(array + i) << ' ';
+	}
+	Del(array, size);
+	delete[] array;
 
 	return 0;
 }
