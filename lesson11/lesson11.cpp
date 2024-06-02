@@ -13,32 +13,81 @@
 
 using namespace std;
 
-int main(){
-    srand((time(0)));
-    int block = 2, row = 5, col = 5;
-    int*** pArr = new int** [row];
-
-    for (int k = 0; k < block; k++) {
-        pArr[k] = new int* [row];
-        for (int i = 0; i < row; i++) {
-            pArr[k][i] = new int[col];
+void cleaning(int** pArr, int row, int  col) {
+    bool ticket = true;
+    int counter = 0;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (pArr[i][j] == 0) {
+                ticket = false;
+                break;
+            }
+        }
+        if (ticket) {
+            counter++;
+        }
+        ticket = true;
+    }
+    int** array2 = new int* [counter];
+    int index = 0;
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (pArr[i][j] == 0) {
+                ticket = false;
+                break;
+            }
+        }
+        if (ticket) {
+            array2[index] = new int[col];
             for (int j = 0; j < col; j++) {
-                pArr[k][i][j] = 10 + rand() % 39;
-                cout << pArr[k][i][j] << ' ';
+                array2[index][j] = pArr[i][j];
+                cout << array2[index][j] << ' ';
             }
             cout << endl;
+            index++;
+        }
+        ticket = true;
+    }
+    for (int i = 0; i < counter; i++) {
+        delete[]array2[i];
+    }
+    delete[] array2;
+
+}
+
+int main(){
+    srand((time(0)));
+    int row, col;
+
+    cout << "write rows and col: ";
+    cin >> row >> col;
+
+    int** pArr = new int* [row];
+
+    for (int i = 0; i < row; i++) {
+
+        pArr[i] = new int[col];
+
+        for (int j = 0; j < col; j++) {
+
+            pArr[i][j] = rand() % 10;
+
+            cout << pArr[i][j] << " ";
         }
         cout << endl;
     }
+    cout << endl;
 
-    for (int i = 0; i < block; i++) {
-        for (int j = 0; j < row; j++) {
-            delete[]pArr[i][j];
-        }
-        delete[]pArr[i];
+    cleaning(pArr, row, col);
+
+
+    for (int i = 0; i < row; i++) {
+
+        delete[] pArr[i];
+
     }
-    delete[] pArr;
 
+    delete[] pArr;
 
 	return 0;
 }
