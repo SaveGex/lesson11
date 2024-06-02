@@ -13,67 +13,31 @@
 
 using namespace std;
 
-void Funcition(int* array, int size) {
-	int positive = 0, negative = 0, zeros = 0;
-	for (int i = 0; i < size; i++) {
-		if (*(array + i) > 0) {
-			positive++;
-		}
-		else if (*(array + i) < 0) {
-			negative++;
-		}
-		else if (*(array + i) == 0) {
-			zeros++;
-		}
-	}
-	int* pos_array = new int[positive];
-	int* neg_array = new int[negative];
-	int* zero_array = new int[zeros];
-	int index_p = 0;
-	int index_n = 0;
-	int index_z = 0;
-
-	for (int i = 0; i < size; i++) {
-		if (*(array + i) > 0) {
-			*(pos_array + index_p) = *(array + i);
-			index_p++;
-		}
-		else if (*(array + i) < 0) {
-			*(neg_array + index_n) = *(array + i);
-			index_n++;
-
-		}
-		else if (*(array + i) == 0) {
-			*(zero_array + index_z) = *(array + i);
-			index_z++;
-		}
-	}
-	cout << endl;
-	for (int i = 0; i < positive; i++) {
-		cout << *(pos_array + i) << ' ';
-	}
-	cout << endl;
-	for (int i = 0; i < negative; i++) {
-		cout << *(neg_array + i) << ' ';
-	}
-	cout << endl;
-	for (int i = 0; i < zeros; i++) {
-		cout << *(zero_array + i) << ' ';
-	}
-	delete[]pos_array;
-	delete[]neg_array;
-	delete[]zero_array;
-}
 int main(){
-	srand(time(nullptr));
-	int const size = 20;
-	int array[size];
-	for (int i = 0; i < size; i++) {
-		array[i] = -15 + rand() % (21); 
-		cout << array[i]<<' ';
-	}
-	cout << endl;
-	Funcition(array, size);
+    srand((time(0)));
+    int block = 2, row = 5, col = 5;
+    int*** pArr = new int** [row];
+
+    for (int k = 0; k < block; k++) {
+        pArr[k] = new int* [row];
+        for (int i = 0; i < row; i++) {
+            pArr[k][i] = new int[col];
+            for (int j = 0; j < col; j++) {
+                pArr[k][i][j] = 10 + rand() % 39;
+                cout << pArr[k][i][j] << ' ';
+            }
+            cout << endl;
+        }
+        cout << endl;
+    }
+
+    for (int i = 0; i < block; i++) {
+        for (int j = 0; j < row; j++) {
+            delete[]pArr[i][j];
+        }
+        delete[]pArr[i];
+    }
+    delete[] pArr;
 
 
 	return 0;
