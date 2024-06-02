@@ -13,77 +13,33 @@
 
 using namespace std;
 
-vector<int> sort_find(vector<int> &array) {
-	vector<int> index_array;
-	int size = 10;
-	int left, right, index;
-	sort(array.begin(), array.end());
-	left = array[0];
-	index = 0;
-	for (int i = 0; i < 10; i++) {
-		if (left > 0 && array[i] < 0) {
-			left = array[i];
-			index = i;
-		}
+void Math_Op(vector <int> &array,int size, int *suma, int *product_of_digits) {
+	*suma = 0;
+	*product_of_digits = 1;
+	for (int i = 0; i < size; i++) {
+		*suma += array[i];
+		*product_of_digits *= array[i];
 	}
-	index_array.push_back(index);
-
-
-	right = array[9];
-	index = 9;
-	for (int i = 9; i > -1; i--) {
-		if (array[i] < 0 && right > 0) {
-			right = array[i];
-			index = i;
-		}
-	}
-	index_array.push_back(index);
-
-	
-	return index_array;
+	cout << *suma << ' ' << *product_of_digits;
 }
 
-
 int main() {
-	srand(time(0));
-
-	int size = 10, digit;
-	vector<int> index_array;
-	vector<int> array(size);
-	bool ticket = true;
-	
-	for (int i = 0; i < size; i++) {
-		digit = -20 + rand() % (20 + 20 + 1);
-		array[i] = digit;
+	vector <int> array;
+	short size = 7;
+	int suma, product_of_digits;
+	for (short i = 0; i < size; i++) {
+		short digit = 1 + rand() % (20 - 1 + 1);
+		array.push_back(digit);
 	}
-	for (short i : array) {
+	for (auto i : array) {
 		cout << ' ' << i;
 	}
 	cout << endl;
-	index_array = sort_find(array);
-	for (int i = 0; i < index_array.size(); i++) {
-		int first = array[i];
-		if (first < array[i + 1]) {
-			ticket = true;
-			break;
-		}
-		else {
-			ticket = false;
-			break;
-		}
-	}
-	cout << endl;
+	suma = 0;
+	product_of_digits = 1;
+	Math_Op(array, size, &suma, &product_of_digits);
 
-	if (ticket == true) {
-		for (int i = index_array[0]; i < index_array[1]; i++) {
-			cout << array[i];
-		}
-	}
-	else {
-		for (short i : array) {
-			cout << ' ' << i;
-		}
-	}
+
+	return 0;
 }
-
 
