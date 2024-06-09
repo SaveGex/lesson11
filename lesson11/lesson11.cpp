@@ -37,8 +37,9 @@ bool Check_Ip(string& ip) {
 			}
 			dots++;
 			digit = stoi(result);
-			if (digit < 256 && digit > -1) {
+			if (digit < 256 && digit >= 0) {
 				ticket = true;
+				result = "";
 			}
 			else {
 				ticket = false;
