@@ -18,10 +18,23 @@ bool Check_Ip(string& ip) {
 	string result;
 	int dots = 0, digit;
 
+	if (ip.empty()) {
+		ticket = false;
+		return ticket;
+	}
+
 	for (int i = 0; i < ip.length(); i++) {
 		
-
+		
 		if (ip[i] == '.') {
+			if (!isdigit(ip[i - 1])) {
+				ticket = false;
+				break;
+			}
+			if (!isdigit(ip[i + 1])) {
+				ticket = false;
+				break;
+			}
 			dots++;
 			digit = stoi(result);
 			if (digit < 256 && digit > -1) {
@@ -29,6 +42,7 @@ bool Check_Ip(string& ip) {
 			}
 			else {
 				ticket = false;
+				break;
 			}
 		}
 		else {
