@@ -13,81 +13,56 @@
 
 using namespace std;
 
-void cleaning(int** pArr, int row, int  col) {
-    bool ticket = true;
-    int counter = 0;
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
-            if (pArr[i][j] == 0) {
-                ticket = false;
-                break;
-            }
-        }
-        if (ticket) {
-            counter++;
-        }
-        ticket = true;
-    }
-    int** array2 = new int* [counter];
-    int index = 0;
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
-            if (pArr[i][j] == 0) {
-                ticket = false;
-                break;
-            }
-        }
-        if (ticket) {
-            array2[index] = new int[col];
-            for (int j = 0; j < col; j++) {
-                array2[index][j] = pArr[i][j];
-                cout << array2[index][j] << ' ';
-            }
-            cout << endl;
-            index++;
-        }
-        ticket = true;
-    }
-    for (int i = 0; i < counter; i++) {
-        delete[]array2[i];
-    }
-    delete[] array2;
+bool Check_Ip(string& ip) {
+	bool ticket = true;
+	string result;
+	int dots = 0, digit;
 
+	for (int i = 0; i < ip.length(); i++) {
+		
+
+		if (ip[i] == '.') {
+			dots++;
+			digit = stoi(result);
+			if (digit < 256 && digit > -1) {
+				ticket = true;
+			}
+			else {
+				ticket = false;
+			}
+		}
+		else {
+			result += ip[i];
+		}
+		if (dots > 3) {
+			ticket = false;
+		}
+		if (!ticket) {
+			break;
+		}
+	}
+	return ticket;
+	
 }
 
-int main(){
-    srand((time(0)));
-    int row, col;
+string Create_Ip(string ip) {
+	cout << "Write ip: ";
+	getline(cin, ip);
+	return ip;
+}
 
-    cout << "write rows and col: ";
-    cin >> row >> col;
+int main() {
+	string ip, result;
 
-    int** pArr = new int* [row];
+	ip = Create_Ip(ip);
+	bool ticket = Check_Ip(ip);
 
-    for (int i = 0; i < row; i++) {
-
-        pArr[i] = new int[col];
-
-        for (int j = 0; j < col; j++) {
-
-            pArr[i][j] = rand() % 10;
-
-            cout << pArr[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-
-    cleaning(pArr, row, col);
-
-
-    for (int i = 0; i < row; i++) {
-
-        delete[] pArr[i];
-
-    }
-
-    delete[] pArr;
+	if (ticket) {
+		cout << "all right";
+	}
+	else {
+		cout << "error";
+	}
 
 	return 0;
 }
