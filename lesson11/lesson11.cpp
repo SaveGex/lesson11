@@ -13,72 +13,56 @@
 
 using namespace std;
 
-bool Check_Ip(string& ip) {
-	bool ticket = true;
-	string result;
-	int dots = 0, digit;
 
-	if (ip.empty()) {
-		ticket = false;
-		return ticket;
-	}
 
-	for (int i = 0; i < ip.length(); i++) {
-		
-		
-		if (ip[i] == '.') {
-			if (!isdigit(ip[i - 1])) {
-				ticket = false;
-				break;
-			}
-			if (!isdigit(ip[i + 1])) {
-				ticket = false;
-				break;
-			}
-			dots++;
-			digit = stoi(result);
-			if (digit < 256 && digit >= 0) {
-				ticket = true;
-				result = "";
-			}
-			else {
-				ticket = false;
-				break;
-			}
-		}
-		else {
-			result += ip[i];
-		}
-		if (dots > 3) {
-			ticket = false;
-		}
-		if (!ticket) {
-			break;
-		}
-	}
-	return ticket;
-	
+typedef struct {
+
+    string name;
+
+    char gender;
+
+    double GPA;
+
+} Student;
+
+void Counter(Student* asd, int size) {
+    int countM = 0, countF = 0;
+    double scoreM = 0, scoreF = 0;
+    for (int i = 0; i < size; i++) {
+        if (asd[i].gender == 'M') {
+            countM++;
+            scoreM += asd[i].GPA;
+        }
+        if (asd[i].gender == 'F') {
+            countF++;
+            scoreF += asd[i].GPA;
+        }
+    }
+    float score1 = scoreF / countF;
+    float score2 = scoreM / countM;
+    if (score1 > score2) {
+        cout << "GPA boys big than girls";
+        cout << endl << score1 << "  |   " << score2;
+    }        
+
+    else {
+        cout << "GPA girls big than boys";
+        cout << endl << score1 << "  |   " << score2;
+
+    }
 }
 
-string Create_Ip(string ip) {
-	cout << "Write ip: ";
-	getline(cin, ip);
-	return ip;
-}
 
 int main() {
-	string ip, result;
+    Student asd[]{
+        {"name", 'M', 9.1},
+        {"rased", 'F', 1.2},
+        {"dfs", 'M', 1.9},
+        {"shfgd",'F', 10.6},
+        {"hjfikls",'M', 5.6}
 
-	ip = Create_Ip(ip);
-	bool ticket = Check_Ip(ip);
+    };
+    int size = sizeof(asd) / sizeof(asd[0]);
 
-	if (ticket) {
-		cout << "all right";
-	}
-	else {
-		cout << "error";
-	}
-
-	return 0;
+    Counter(asd, size);
 }
-
