@@ -9,30 +9,55 @@
 //bonk2 = find(array.begin(), array.end(), bot1);
 //index_bot = distance(array.begin(), bonk2);
 
-#define POWS(a,b) pow(a,b)
-#define DIVIDE(a) ((a%2==0) ? "even":"odd")
-#define pos_neg(a) ((a>0)?"positive":"negative")
-
 using namespace std;
 
+struct Films{
+	string name;
+	string author;
+	string genre;
+	float rating;
+	int price;
+};
 
+Films Fill() {
+	Films film;
+
+	cout << endl;
+	cout << "name: ";
+	getline(cin, film.name);
+
+	cout << endl;
+	cout << "author: ";
+	getline(cin, film.author);
+
+	cout << endl;
+	cout << "genre: ";
+	getline(cin, film.genre);
+
+
+	cout << endl;
+	cout << "rating: ";
+	cin >> film.rating;
+
+	cout << endl;
+	cout << "price: ";
+	cin >> film.price;
+
+	return film;
+}
 
 int main() {
-	int digit, digit2;
+	int size = 1;
 
-	cout << "\nWrite num1: ";
-	cin >> digit;
+	Films* array = new Films[size];
+	for (int i = 0; i < size; i++) {
+		array[i] = Fill();
+		cin.ignore();
+	}
 
-	cout << "\nWrite num2: ";
-	cin >> digit2;
-
-	cout << POWS(digit, digit2);
-
-	cout << endl << DIVIDE(digit) << endl << DIVIDE(digit2);
-
-	cout << endl << pos_neg(digit) << endl << pos_neg(digit2);
-
-
+	for (int i = 0; i < size; i++) {
+		cout << array[i].name << "\t" << array[i].author << "\t" << array[i].genre << "\t" << array[i].rating << "\t" << array[i].price << endl;
+	}
 
 	return 0;
 }
