@@ -1,63 +1,54 @@
 ﻿#include <iostream>
-#include <iomanip>
-#include <Windows.h>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#include <algorithm>
+#include <fstream>
 #include <string>
-//bonk2 = find(array.begin(), array.end(), bot1);
-//index_bot = distance(array.begin(), bonk2);
-
+#include <Windows.h>
+#include <algorithm>
 using namespace std;
 
-struct Films{
+
+struct Students {
 	string name;
-	string author;
-	string genre;
-	float rating;
-	int price;
+	string surname;
+	int	rating;
 };
 
-Films Fill() {
-	Films film;
-
-	cout << endl;
-	cout << "name: ";
-	getline(cin, film.name);
-
-	cout << endl;
-	cout << "author: ";
-	getline(cin, film.author);
-
-	cout << endl;
-	cout << "genre: ";
-	getline(cin, film.genre);
-
-
-	cout << endl;
-	cout << "rating: ";
-	cin >> film.rating;
-
-	cout << endl;
-	cout << "price: ";
-	cin >> film.price;
-
-	return film;
+bool PN(Students n1, Students n2) {
+	return n1.rating > n2.rating;
 }
 
 int main() {
-	int size = 1;
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
 
-	Films* array = new Films[size];
-	for (int i = 0; i < size; i++) {
-		array[i] = Fill();
-		cin.ignore();
+	ifstream file("output.txt");
+
+	if (!file){
+		cout << "Does't not exists";
+		return 1;
 	}
 
-	for (int i = 0; i < size; i++) {
-		cout << array[i].name << "\t" << array[i].author << "\t" << array[i].genre << "\t" << array[i].rating << "\t" << array[i].price << endl;
+	Students* array = new Students[20];
+	int count = 0;
+
+	for (int i = 0; i < 20; i++) {
+		if (file >> array[i].name >> array[i].surname >> array[i].rating){
+			count++;
+		}
+		else {
+			break;
+		}
 	}
+
+	cout << count;
+
+	sort(array, array + 20, PN);
+
+	for (int i = 0; i < count; i++) {
+		cout << i + 1 << ' ' << array[i].name << array[i].surname << array[i].rating<<endl;
+	}
+
+	file.close();
 
 	return 0;
+
 }
