@@ -5,50 +5,58 @@
 #include <algorithm>
 using namespace std;
 
-
-struct Students {
-	string name;
-	string surname;
-	int	rating;
+struct Morze {
+	char sym;
+	const char* symbols;
 };
 
-bool PN(Students n1, Students n2) {
-	return n1.rating > n2.rating;
-}
+Morze array[]{
+   {'A', ".-"}, {'B', "-..."}, {'C', "-.-."}, {'D', "-.."}, {'E', "."},
+   {'F', "..-."}, {'G', "--."}, {'H', "...."}, {'I', ".."}, {'J', ".---"},
+   {'K', "-.-"}, {'L', ".-.."}, {'M', "--"}, {'N', "-."}, {'O', "---"},
+   {'P', ".--."}, {'Q', "--.-"}, {'R', ".-."}, {'S', "..."}, {'T', "-"},
+   {'U', "..-"}, {'V', "...-"}, {'W', ".--"}, {'X', "-..-"}, {'Y', "-.--"},
+   {'Z', "--.."}
+};
 
 int main() {
 	SetConsoleOutputCP(1251);
 	SetConsoleCP(1251);
 
-	ifstream file("output.txt");
+	string result;
+	char message[10000];
 
-	if (!file){
-		cout << "Does't not exists";
+	cout << "Write message for encryption";
+
+	fgets(message,sizeof(message), stdin);
+
+	char* ptr = message;
+
+	for (int i = 0; message[i] != '\0'; i++) {
+		*ptr++ = toupper(message[i]);
+	}
+
+	for (int i = 0; message[i]!='\0'; i++) {
+		for (Morze letter : ::array) {
+			if (letter.sym == message[i]) result += letter.symbols;
+		}
+	}
+	cout << message;
+
+	string fileName;
+	cout << "Write name of file";
+	getline(cin, fileName);
+	ofstream f(fileName + ".txt");
+	if (f) {
+		f << "Your message: " << message << endl;
+		f << "Encode morze: " << result << endl;
+		f.close();
+		cout << "All rigth" << endl;
+	}
+	else {
+		cout << "file doesn't exists";
 		return 1;
 	}
-
-	Students* array = new Students[20];
-	int count = 0;
-
-	for (int i = 0; i < 20; i++) {
-		if (file >> array[i].name >> array[i].surname >> array[i].rating){
-			count++;
-		}
-		else {
-			break;
-		}
-	}
-
-	cout << count;
-
-	sort(array, array + 20, PN);
-
-	for (int i = 0; i < count; i++) {
-		cout << i + 1 << ' ' << array[i].name << array[i].surname << array[i].rating<<endl;
-	}
-
-	file.close();
-
 	return 0;
 
 }
